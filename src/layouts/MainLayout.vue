@@ -79,8 +79,11 @@
         </q-toolbar-title>
         <q-toggle
           v-model="value"
+          :label="value"
           @click="$q.dark.toggle()"
           color="dark"
+          false-value="Light"
+          true-value="Dark"
           keep-color
         />
       </q-toolbar>
@@ -118,7 +121,7 @@ export default defineComponent({
         rightDrawerOpen.value = !rightDrawerOpen.value;
       },
       drawer: ref(false),
-      value: ref(false),
+      value: ref("Light"),
     };
   },
 });
