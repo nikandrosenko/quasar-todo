@@ -1,6 +1,6 @@
 <template>
   <q-page class="q-pa-lg">
-    <h4>Help</h4>
+    <h4 class="text-weight-bolder">Help</h4>
     <p>
       Lorem ipsum dolor, sit amet consectetur adipisicing elit. Odit ipsa atque,
       dignissimos in esse ut repellat. Sit eligendi deleniti tempora, excepturi

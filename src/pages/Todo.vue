@@ -1,6 +1,6 @@
 <template>
   <q-page class="q-pa-lg">
-    <h4>Todo</h4>
+    <h4 class="text-weight-bolder">Todo</h4>
     <ul>
       <li></li>
       <li></li>

@@ -1,6 +1,6 @@
 <template>
   <q-page class="q-pa-lg">
-    <h4>Contacts</h4>
+    <h4 class="text-weight-bolder">Contacts</h4>
     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
     <p>
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos nihil nulla

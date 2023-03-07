@@ -1,6 +1,6 @@
 <template>
   <q-page class="q-pa-lg">
-    <h4>About</h4>
+    <h4 class="text-weight-bolder">About</h4>
     <p>
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed illo
       expedita, voluptate non asperiores qui labore eum voluptas, eius
