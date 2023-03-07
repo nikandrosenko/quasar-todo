@@ -3,8 +3,11 @@
     <q-header reveal elevated class="bg-primary text-white" height-hint="98">
       <q-toolbar>
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
-        <q-toolbar-title> TODO List </q-toolbar-title>
       </q-toolbar>
+      <div class="q-pt-md q-px-lg q-mb-md">
+        <div class="text-h3">TODO List</div>
+        <div class="text-subtitle1">{{ todaysDate }}</div>
+      </div>
     </q-header>
 
     <q-drawer show-if-above v-model="leftDrawerOpen" side="left" elevated>
@@ -16,13 +19,15 @@
         "
       >
         <q-list padding class="menu-list">
-          <q-item active clickable v-ripple>
-            <q-item-section avatar>
-              <q-icon name="looks_one" />
-            </q-item-section>
+          <router-link to="firstpage">
+            <q-item active clickable v-ripple>
+              <q-item-section avatar>
+                <q-icon name="looks_one" />
+              </q-item-section>
 
-            <q-item-section> One </q-item-section>
-          </q-item>
+              <q-item-section> One </q-item-section>
+            </q-item>
+          </router-link>
 
           <q-item clickable v-ripple>
             <q-item-section avatar>
@@ -74,9 +79,6 @@
 
     <q-footer elevated class="bg-grey-8 text-white">
       <q-toolbar>
-        <q-toolbar-title>
-          <div>Quasar project 1T</div>
-        </q-toolbar-title>
         <q-toggle
           v-model="value"
           :label="value"
@@ -93,7 +95,7 @@
 
 <script>
 import { watch, defineComponent, ref } from "vue";
-import { useQuasar } from "quasar";
+import { useQuasar, date } from "quasar";
 
 export default defineComponent({
   name: "MainLayout",
@@ -124,5 +126,17 @@ export default defineComponent({
       value: ref("Light"),
     };
   },
+  computed: {
+    todaysDate() {
+      const timeStamp = Date.now();
+      return date.formatDate(timeStamp, "dddd DD-MM-YYYY");
+    },
+  },
 });
 </script>
+
+<style lang="scss">
+a {
+  text-decoration: none;
+}
+</style>
