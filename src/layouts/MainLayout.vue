@@ -8,60 +8,52 @@
         <div class="text-h3">TODO List</div>
         <div class="text-subtitle1">{{ todaysDate }}</div>
       </div>
+      <q-img class="header-img absolute-top" src="~/assets/dragon.jpg" />
     </q-header>
 
     <q-drawer show-if-above v-model="leftDrawerOpen" side="left" elevated>
       <q-scroll-area
         style="
-          height: calc(100% - 150px);
-          margin-top: 150px;
+          height: calc(100% - 160px);
+          margin-top: 160px;
           border-right: 1px solid #ddd;
         "
       >
         <q-list padding class="menu-list">
-          <router-link to="firstpage">
-            <q-item active clickable v-ripple>
-              <q-item-section avatar>
-                <q-icon name="looks_one" />
-              </q-item-section>
-
-              <q-item-section> One </q-item-section>
-            </q-item>
-          </router-link>
-
-          <q-item clickable v-ripple>
+          <q-item to="/" exact clickable v-ripple>
             <q-item-section avatar>
-              <q-icon name="looks_two" />
+              <q-icon name="format_list_bulleted" />
             </q-item-section>
-
-            <q-item-section> Two </q-item-section>
+            <q-item-section> Todo </q-item-section>
           </q-item>
-
-          <q-item clickable v-ripple>
+          <q-item to="/about" exact clickable v-ripple>
             <q-item-section avatar>
-              <q-icon name="looks_3" />
+              <q-icon name="info_outline" />
             </q-item-section>
-
-            <q-item-section> Three </q-item-section>
+            <q-item-section> About </q-item-section>
           </q-item>
-
-          <q-item clickable v-ripple>
+          <q-item to="/help" exact clickable v-ripple>
             <q-item-section avatar>
-              <q-icon name="looks_4" />
+              <q-icon name="help_outline" />
             </q-item-section>
-
-            <q-item-section> Four </q-item-section>
+            <q-item-section> Help </q-item-section>
+          </q-item>
+          <q-item to="/contacts" exact clickable v-ripple>
+            <q-item-section avatar>
+              <q-icon name="mail_outline" />
+            </q-item-section>
+            <q-item-section> Contacts </q-item-section>
           </q-item>
         </q-list>
       </q-scroll-area>
       <q-img
         class="absolute-top"
         src="~/assets/dungeon.jpg"
-        style="height: 150px"
+        style="height: 160px"
       >
         <div class="absolute-bottom bg-transparent">
           <q-avatar size="56px" class="q-mb-sm">
-            <img src="~/assets/avatar-nik.jpg" />
+            <img src="~/assets/avatar-nik.webp" />
           </q-avatar>
           <div class="text-weight-bold">Nikita Androsenko</div>
           <div>@nikita</div>
@@ -74,7 +66,11 @@
     </q-drawer>
 
     <q-page-container>
-      <router-view />
+      <router-view v-slot="{ Component }">
+        <keep-alive>
+          <component :is="Component" />
+        </keep-alive>
+      </router-view>
     </q-page-container>
 
     <q-footer elevated class="bg-grey-8 text-white">
@@ -136,7 +132,11 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-a {
-  text-decoration: none;
+// a {
+//   text-decoration: none;
+// }
+.header-img {
+  height: 100%;
+  z-index: -1;
 }
 </style>
