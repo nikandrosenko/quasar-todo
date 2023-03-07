@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh lpr fFf">
-    <q-header reveal elevated class="bg-primary text-white" height-hint="98">
+    <q-header reveal class="bg-primary text-white" height-hint="98">
       <q-toolbar>
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
       </q-toolbar>
@@ -11,7 +11,14 @@
       <q-img class="header-img absolute-top" src="~/assets/dragon.jpg" />
     </q-header>
 
-    <q-drawer show-if-above v-model="leftDrawerOpen" side="left" elevated>
+    <q-drawer
+      show-if-above
+      v-model="leftDrawerOpen"
+      side="left"
+      elevated
+      :width="250"
+      :breakpoint="600"
+    >
       <q-scroll-area
         style="
           height: calc(100% - 160px);
@@ -47,13 +54,13 @@
         </q-list>
       </q-scroll-area>
       <q-img
-        class="absolute-top"
+        class="absolute-top avatar-bg-shadow"
         src="~/assets/dungeon.jpg"
         style="height: 160px"
       >
-        <div class="absolute-bottom bg-transparent">
+        <div class="absolute-bottom bg-transparent" style="z-index: 1">
           <q-avatar size="56px" class="q-mb-sm">
-            <img src="~/assets/avatar-nik.webp" />
+            <img src="~/assets/avatar-nik.jpg" />
           </q-avatar>
           <div class="text-weight-bold">Nikita Androsenko</div>
           <div>@nikita</div>
@@ -73,9 +80,10 @@
       </router-view>
     </q-page-container>
 
-    <q-footer elevated class="bg-grey-8 text-white">
+    <q-footer class="bg-grey-8 text-white">
       <q-toolbar>
         <q-toggle
+          class="absolute-right q-px-md"
           v-model="value"
           :label="value"
           @click="$q.dark.toggle()"
@@ -132,11 +140,31 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-// a {
-//   text-decoration: none;
-// }
 .header-img {
   height: 100%;
   z-index: -1;
+  &::after {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    box-shadow: inset 25em 0 10em rgba(0, 0, 0, 0.5);
+  }
+}
+.avatar-bg-shadow {
+  z-index: 0;
+  &::after {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    box-shadow: inset 0 -5em 3em -7px rgba(0, 0, 0, 0.8);
+  }
 }
 </style>
