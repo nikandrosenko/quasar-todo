@@ -20,6 +20,7 @@
         <q-item-section>
           <q-item-label>{{ task.title }}</q-item-label>
         </q-item-section>
+        <q-item-section v-if="task.done" side> x </q-item-section>
       </q-item>
     </q-list>
   </q-page>
