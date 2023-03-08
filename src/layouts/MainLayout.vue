@@ -75,7 +75,7 @@
     <q-page-container>
       <router-view v-slot="{ Component }">
         <keep-alive>
-          <transition appear @enter="enter">
+          <transition mode="out-in" appear @enter="enter">
             <component :is="Component" />
           </transition>
         </keep-alive>
