@@ -148,7 +148,7 @@ export default defineComponent({
       gsap.to(el, {
         delay: 0.5,
         duration: 1,
-        y: 2,
+        y: 0,
         opacity: 1,
       });
     },
