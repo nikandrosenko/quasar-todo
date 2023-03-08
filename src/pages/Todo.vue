@@ -1,16 +1,51 @@
 <template>
-  <q-page class="q-pa-lg">
-    <h4 class="text-weight-bolder">Todo</h4>
-    <ul>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-    </ul>
+  <q-page class="q-pa-lg column">
+    <q-list separator bordered>
+      <q-item
+        @click="task.done = !task.done"
+        clickable
+        :class="{ done: task.done }"
+        v-for="task in tasks"
+        :key="task.title"
+        v-ripple
+      >
+        <q-item-section avatar>
+          <q-checkbox
+            class="no-pointer-events"
+            v-model="task.done"
+            val="teal"
+            color="primary"
+          />
+        </q-item-section>
+        <q-item-section>
+          <q-item-label>{{ task.title }}</q-item-label>
+        </q-item-section>
+      </q-item>
+    </q-list>
   </q-page>
 </template>
 
-<script></script>
+<script>
+export default {
+  data() {
+    return {
+      tasks: [
+        {
+          title: "one",
+          done: true,
+        },
+        {
+          title: "two",
+          done: false,
+        },
+        {
+          title: "three",
+          done: false,
+        },
+      ],
+    };
+  },
+};
+</script>
+
+<style lang="scss"></style>
