@@ -75,7 +75,7 @@
     <q-page-container>
       <router-view v-slot="{ Component }">
         <keep-alive>
-          <transition appear @before-enter="beforeEnter" @enter="enter">
+          <transition appear @enter="enter">
             <component :is="Component" />
           </transition>
         </keep-alive>
@@ -140,17 +140,20 @@ export default defineComponent({
     },
   },
   methods: {
-    beforeEnter(el) {
-      el.style.opacity = "0";
-      el.style.transform = "translateY(-100px)";
-    },
     enter(el) {
-      gsap.to(el, {
-        delay: 0.5,
-        duration: 1,
-        y: 2,
-        opacity: 1,
-      });
+      gsap.fromTo(
+        el,
+        {
+          y: -100,
+          opacity: 0,
+        },
+        {
+          delay: 0.5,
+          duration: 1,
+          y: 0,
+          opacity: 1,
+        }
+      );
     },
   },
 });
