@@ -75,7 +75,9 @@
     <q-page-container>
       <router-view v-slot="{ Component }">
         <keep-alive>
-          <component :is="Component" />
+          <transition appear @before-enter="beforeEnter" @enter="enter">
+            <component :is="Component" />
+          </transition>
         </keep-alive>
       </router-view>
     </q-page-container>
@@ -100,6 +102,7 @@
 <script>
 import { watch, defineComponent, ref } from "vue";
 import { useQuasar, date } from "quasar";
+import gsap from "gsap";
 
 export default defineComponent({
   name: "MainLayout",
@@ -134,6 +137,20 @@ export default defineComponent({
     todaysDate() {
       const timeStamp = Date.now();
       return date.formatDate(timeStamp, "dddd DD-MM-YYYY");
+    },
+  },
+  methods: {
+    beforeEnter(el) {
+      el.style.opacity = "0";
+      el.style.transform = "translateY(-100px)";
+    },
+    enter(el) {
+      gsap.to(el, {
+        delay: 0.5,
+        duration: 1,
+        y: 2,
+        opacity: 1,
+      });
     },
   },
 });
