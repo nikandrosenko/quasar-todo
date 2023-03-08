@@ -4,7 +4,7 @@
       <q-item
         @click="task.done = !task.done"
         clickable
-        :class="{ done: task.done }"
+        :class="{ 'done bg-red-1': task.done }"
         v-for="task in tasks"
         :key="task.title"
         v-ripple
@@ -48,4 +48,11 @@ export default {
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.done {
+  .q-item__label {
+    text-decoration: line-through;
+    color: $primary;
+  }
+}
+</style>
