@@ -1,6 +1,6 @@
 <template>
   <q-page class="q-pa-lg column">
-    <div class="row q-pa-sm q-mb-md bg-red-1">
+    <div class="row q-pa-sm q-mb-md">
       <q-input
         @keyup.enter="addTask"
         filled
@@ -10,23 +10,16 @@
         dense
       >
         <template v-slot:append>
-          <q-btn
-            :disabled="!newTask"
-            @click="addTask"
-            round
-            flat
-            dense
-            icon="add"
-          />
+          <q-btn @click="addTask" round flat dense icon="add" />
         </template>
       </q-input>
     </div>
     <q-list separator bordered>
       <q-item
-        @click="task.done = !task.done"
+        @click="toggleDone(task.id)"
         clickable
         :class="{ 'done bg-red-1': task.done }"
-        v-for="(task, index) in tasks"
+        v-for="task in tasks"
         :key="task.title"
         v-ripple
       >
@@ -43,7 +36,7 @@
         </q-item-section>
         <q-item-section v-if="task.done" side>
           <q-btn
-            @click.stop="deleteTask(index)"
+            @click.stop="deleteTask(task.id)"
             dense
             round
             color="primary"
@@ -56,35 +49,84 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useQuasar } from "quasar";
+import {
+  collection,
+  onSnapshot,
+  addDoc,
+  deleteDoc,
+  updateDoc,
+  doc,
+  query,
+  orderBy,
+} from "firebase/firestore";
+import { db } from "../firebase";
+
 export default {
   setup() {
+    const tasksCollectionRef = collection(db, "tasks");
+    const tasksCollectionQuery = query(
+      tasksCollectionRef,
+      orderBy("date", "desc")
+    );
     const newTask = ref("");
     const tasks = ref([]);
     const $q = useQuasar();
+    onMounted(() => {
+      onSnapshot(tasksCollectionQuery, (querySnapshot) => {
+        const fbTasks = [];
+        querySnapshot.forEach((doc) => {
+          const task = {
+            id: doc.id,
+            title: doc.data().title,
+            done: doc.data().done,
+          };
+          fbTasks.push(task);
+        });
+        tasks.value = fbTasks;
+      });
+    });
     return {
       tasks,
       newTask,
       addTask() {
-        tasks.value.push({
-          title: newTask.value,
-          done: false,
-        });
-        newTask.value = "";
+        if (newTask.value === "") {
+          $q.notify({
+            type: "negative",
+            message: "Your task is empty",
+          });
+        } else {
+          addDoc(tasksCollectionRef, {
+            title: newTask.value,
+            done: false,
+            date: Date.now(),
+          });
+          newTask.value = "";
+          $q.notify({
+            type: "positive",
+            message: "Your task has been added.",
+          });
+        }
       },
-      deleteTask(index) {
+      deleteTask(id) {
         $q.dialog({
           title: "Confirm",
           message: "Are you sure you want to delete the task?",
           cancel: true,
           persistent: true,
         }).onOk(() => {
-          tasks.value.splice(index, 1);
+          deleteDoc(doc(tasksCollectionRef, id));
           $q.notify({
             type: "positive",
             message: "Your task has been deleted.",
           });
+        });
+      },
+      toggleDone(id) {
+        const index = tasks.value.findIndex((task) => task.id === id);
+        updateDoc(doc(tasksCollectionRef, id), {
+          done: !tasks.value[index].done,
         });
       },
     };
