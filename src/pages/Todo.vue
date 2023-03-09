@@ -20,19 +20,18 @@
         clickable
         :class="{ 'done bg-red-1': task.done }"
         v-for="task in tasks"
-        :key="task.title"
+        :key="task.id"
         v-ripple
       >
         <q-item-section avatar>
           <q-checkbox
             class="no-pointer-events"
             v-model="task.done"
-            val="teal"
             color="primary"
           />
         </q-item-section>
         <q-item-section>
-          <q-item-label>{{ task.title }}</q-item-label>
+          <q-item-label class="text-capitalize">{{ task.title }}</q-item-label>
         </q-item-section>
         <q-item-section v-if="task.done" side>
           <q-btn
