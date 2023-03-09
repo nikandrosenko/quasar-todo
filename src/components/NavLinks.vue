@@ -1,5 +1,5 @@
 <template>
-  <q-drawer>
+  <q-drawer show-if-above side="left" elevated :width="250" :breakpoint="600">
     <q-scroll-area
       style="
         height: calc(100% - 160px);

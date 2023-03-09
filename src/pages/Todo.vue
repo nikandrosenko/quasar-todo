@@ -10,7 +10,14 @@
         dense
       >
         <template v-slot:append>
-          <q-btn @click="addTask" round flat dense icon="add" />
+          <q-btn
+            :disabled="!newTask"
+            @click="addTask"
+            round
+            flat
+            dense
+            icon="add"
+          />
         </template>
       </q-input>
     </div>
@@ -49,50 +56,38 @@
 </template>
 
 <script>
+import { ref } from "vue";
+import { useQuasar } from "quasar";
 export default {
-  data() {
+  setup() {
+    const newTask = ref("");
+    const tasks = ref([]);
+    const $q = useQuasar();
     return {
-      newTask: "",
-      tasks: [
-        {
-          title: "one",
-          done: true,
-        },
-        {
-          title: "two",
+      tasks,
+      newTask,
+      addTask() {
+        tasks.value.push({
+          title: newTask.value,
           done: false,
-        },
-        {
-          title: "three",
-          done: false,
-        },
-      ],
-    };
-  },
-  methods: {
-    addTask() {
-      this.tasks.push({
-        title: this.newTask,
-        done: false,
-      });
-      this.newTask = "";
-    },
-    deleteTask(index) {
-      this.$q
-        .dialog({
+        });
+        newTask.value = "";
+      },
+      deleteTask(index) {
+        $q.dialog({
           title: "Confirm",
           message: "Are you sure you want to delete the task?",
           cancel: true,
           persistent: true,
-        })
-        .onOk(() => {
-          this.tasks.splice(index, 1);
-          this.$q.notify({
+        }).onOk(() => {
+          tasks.value.splice(index, 1);
+          $q.notify({
             type: "positive",
             message: "Your task has been deleted.",
           });
         });
-    },
+      },
+    };
   },
 };
 </script>

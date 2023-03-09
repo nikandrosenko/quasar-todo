@@ -1,32 +1,16 @@
 <template>
   <q-layout view="lHh lpr fFf">
-    <q-header reveal class="bg-primary text-white" height-hint="98">
-      <q-toolbar>
-        <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
-      </q-toolbar>
-      <div class="q-pt-md q-px-lg q-mb-md">
-        <div class="text-h3 text-weight-bolder">TODO List</div>
-        <div class="text-subtitle1">{{ todaysDate }}</div>
-      </div>
-      <q-img class="header-img absolute-top" src="~/assets/dragon.jpg" />
-    </q-header>
+    <MainHeader @toggleLeftDrawer="toggleLeftDrawer" />
 
-    <NavLinks
-      v-model="leftDrawerOpen"
-      show-if-above
-      side="left"
-      elevated
-      :width="250"
-      :breakpoint="600"
-    />
+    <NavLinks v-model="leftDrawerOpen" />
 
     <q-page-container>
       <router-view v-slot="{ Component }">
-        <keep-alive>
-          <transition mode="out-in" appear @enter="enter">
+        <transition mode="out-in" appear @enter="enter">
+          <keep-alive>
             <component :is="Component" />
-          </transition>
-        </keep-alive>
+          </keep-alive>
+        </transition>
       </router-view>
     </q-page-container>
 
@@ -48,44 +32,26 @@
 </template>
 
 <script>
-import { watch, ref } from "vue";
+import { ref } from "vue";
 import { useQuasar, date } from "quasar";
 import gsap from "gsap";
+import MainHeader from "src/components/MainHeader.vue";
 import NavLinks from "src/components/NavLinks.vue";
 
 export default {
   name: "MainLayout",
-  components: { NavLinks },
-  computed: {
-    todaysDate() {
-      const timeStamp = Date.now();
-      return date.formatDate(timeStamp, "dddd DD-MM-YYYY");
-    },
-  },
+  components: { MainHeader, NavLinks },
   setup() {
     const leftDrawerOpen = ref(false);
-    const rightDrawerOpen = ref(false);
     const $q = useQuasar();
     $q.dark.set(true);
     $q.dark.toggle();
-    watch(
-      () => $q.dark.isActive,
-      (val) => {
-        console.log(val ? "On dark mode" : "On light mode");
-      }
-    );
 
     return {
       leftDrawerOpen,
       toggleLeftDrawer() {
         leftDrawerOpen.value = !leftDrawerOpen.value;
       },
-
-      rightDrawerOpen,
-      toggleRightDrawer() {
-        rightDrawerOpen.value = !rightDrawerOpen.value;
-      },
-      drawer: ref(false),
       value: ref("Light"),
       enter(el) {
         gsap.fromTo(
