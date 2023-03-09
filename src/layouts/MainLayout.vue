@@ -54,33 +54,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss">
-.header-img {
-  height: 100%;
-  z-index: -1;
-  &::after {
-    content: "";
-    position: absolute;
-    z-index: 0;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    box-shadow: inset 25em 0 10em rgba(0, 0, 0, 0.5);
-  }
-}
-.avatar-bg-shadow {
-  z-index: 0;
-  &::after {
-    content: "";
-    position: absolute;
-    z-index: 0;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    box-shadow: inset 0 -5em 3em -7px rgba(0, 0, 0, 0.8);
-  }
-}
-</style>
