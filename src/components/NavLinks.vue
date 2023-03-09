@@ -1,5 +1,5 @@
 <template>
-  <q-drawer>
+  <q-drawer show-if-above side="left" elevated :width="250" :breakpoint="600">
     <q-scroll-area
       style="
         height: calc(100% - 160px);
@@ -55,3 +55,19 @@ export default {
   name: "NavLinks",
 };
 </script>
+
+<style lang="scss">
+.avatar-bg-shadow {
+  z-index: 0;
+  &::after {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    box-shadow: inset 0 -5em 3em -7px rgba(0, 0, 0, 0.8);
+  }
+}
+</style>
