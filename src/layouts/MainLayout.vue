@@ -14,45 +14,27 @@
       </router-view>
     </q-page-container>
 
-    <q-footer class="bg-grey-8 text-white">
-      <q-toolbar>
-        <q-toggle
-          class="absolute-right q-px-md"
-          v-model="value"
-          :label="value"
-          @click="$q.dark.toggle()"
-          color="dark"
-          false-value="Light"
-          true-value="Dark"
-          keep-color
-        />
-      </q-toolbar>
-    </q-footer>
+    <MainFooter />
   </q-layout>
 </template>
 
 <script>
 import { ref } from "vue";
-import { useQuasar, date } from "quasar";
 import gsap from "gsap";
 import MainHeader from "src/components/MainHeader.vue";
 import NavLinks from "src/components/NavLinks.vue";
+import MainFooter from "src/components/MainFooter.vue";
 
 export default {
   name: "MainLayout",
-  components: { MainHeader, NavLinks },
+  components: { MainHeader, NavLinks, MainFooter },
   setup() {
     const leftDrawerOpen = ref(false);
-    const $q = useQuasar();
-    $q.dark.set(true);
-    $q.dark.toggle();
-
     return {
       leftDrawerOpen,
       toggleLeftDrawer() {
         leftDrawerOpen.value = !leftDrawerOpen.value;
       },
-      value: ref("Light"),
       enter(el) {
         gsap.fromTo(
           el,
