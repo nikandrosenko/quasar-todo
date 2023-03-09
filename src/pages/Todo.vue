@@ -90,7 +90,7 @@ export default {
       tasks,
       newTask,
       addTask() {
-        if (newTask.value === "") {
+        if (newTask.value.trim() === "") {
           $q.notify({
             type: "negative",
             message: "Your task is empty",
