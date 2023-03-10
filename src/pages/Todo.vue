@@ -20,14 +20,13 @@
         clickable
         :class="{ 'done bg-red-1': task.done }"
         v-for="task in tasks"
-        :key="task.title"
+        :key="task.id"
         v-ripple
       >
         <q-item-section avatar>
           <q-checkbox
             class="no-pointer-events"
             v-model="task.done"
-            val="teal"
             color="primary"
           />
         </q-item-section>
@@ -45,6 +44,12 @@
         </q-item-section>
       </q-item>
     </q-list>
+    <div v-if="!tasks.length" class="no-task absolute-center">
+      <q-icon name="whatshot" size="150px" color="primary"></q-icon>
+      <div class="text-h4 text-primary text-center text-capitalize">
+        no tasks
+      </div>
+    </div>
   </q-page>
 </template>
 
@@ -79,7 +84,9 @@ export default {
         querySnapshot.forEach((doc) => {
           const task = {
             id: doc.id,
-            title: doc.data().title,
+            title:
+              doc.data().title.charAt(0).toUpperCase() +
+              doc.data().title.slice(1),
             done: doc.data().done,
           };
           fbTasks.push(task);
@@ -91,7 +98,7 @@ export default {
       tasks,
       newTask,
       addTask() {
-        if (newTask.value === "") {
+        if (newTask.value.trim() === "") {
           $q.notify({
             type: "negative",
             message: "Your task is empty",
@@ -140,5 +147,8 @@ export default {
     text-decoration: line-through;
     color: $primary;
   }
+}
+.no-task {
+  opacity: 0.5;
 }
 </style>
