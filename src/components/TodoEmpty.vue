@@ -9,3 +9,10 @@ export default {
   name: "TodoEmpty",
 };
 </script>
+
+<style lang="scss">
+.no-task {
+  user-select: none;
+  opacity: 0.5;
+}
+</style>

@@ -118,9 +118,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss">
-.no-task {
-  opacity: 0.5;
-}
-</style>
