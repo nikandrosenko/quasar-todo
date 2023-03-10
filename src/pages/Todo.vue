@@ -84,7 +84,9 @@ export default {
         querySnapshot.forEach((doc) => {
           const task = {
             id: doc.id,
-            title: doc.data().title,
+            title:
+              doc.data().title.charAt(0).toUpperCase() +
+              doc.data().title.slice(1),
             done: doc.data().done,
           };
           fbTasks.push(task);
