@@ -103,6 +103,17 @@ export default {
             type: "negative",
             message: "Your task is empty",
           });
+        } else if (
+          tasks.value.some(
+            (element) =>
+              element.title.trim().toLowerCase() ===
+              newTask.value.trim().toLowerCase()
+          )
+        ) {
+          $q.notify({
+            type: "negative",
+            message: "Your task has already been added",
+          });
         } else {
           addDoc(tasksCollectionRef, {
             title: newTask.value,
