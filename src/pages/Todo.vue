@@ -23,12 +23,7 @@
         @deleteTask="deleteTask(task.id)"
       />
     </q-list>
-    <div v-if="!tasks.length" class="no-task absolute-center">
-      <q-icon name="whatshot" size="150px" color="primary"></q-icon>
-      <div class="text-h4 text-primary text-center text-capitalize">
-        no tasks
-      </div>
-    </div>
+    <TodoEmpty v-if="!tasks.length" />
   </q-page>
 </template>
 
@@ -47,9 +42,10 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebase";
 import TodoItem from "../components/TodoItem.vue";
+import TodoEmpty from "../components/TodoEmpty.vue";
 
 export default {
-  components: { TodoItem },
+  components: { TodoItem, TodoEmpty },
   setup() {
     const tasksCollectionRef = collection(db, "tasks");
     const tasksCollectionQuery = query(
