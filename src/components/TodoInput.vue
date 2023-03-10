@@ -2,7 +2,7 @@
   <q-input
     @keyup.enter="addTask"
     filled
-    class="col"
+    class="row q-pa-sm q-mb-md"
     label="Add your task"
     dense
   >

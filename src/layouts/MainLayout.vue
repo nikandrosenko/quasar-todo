@@ -1,11 +1,8 @@
 <template>
   <q-layout view="lHh lpr fFf">
     <MainHeader @toggleLeftDrawer="toggleLeftDrawer" />
-
     <NavLinks v-model="leftDrawerOpen" />
-
     <MainContent />
-
     <MainFooter />
   </q-layout>
 </template>

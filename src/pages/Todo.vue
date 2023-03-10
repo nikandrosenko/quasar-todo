@@ -1,17 +1,15 @@
 <template>
   <q-page class="q-pa-lg column">
-    <div class="row q-pa-sm q-mb-md">
-      <TodoInput @addTask="addTask" v-model="newTask" />
-    </div>
-    <q-list separator bordered>
-      <TodoItem
-        v-for="task in tasks"
-        :key="task.id"
-        :task_data="task"
-        @toggleDone="toggleDone(task.id)"
-        @deleteTask="deleteTask(task.id)"
-      />
-    </q-list>
+    <TodoInput @addTask="addTask" v-model="newTask" />
+    <TodoItem
+      separator
+      bordered
+      v-for="task in tasks"
+      :key="task.id"
+      :task_data="task"
+      @toggleDone="toggleDone(task.id)"
+      @deleteTask="deleteTask(task.id)"
+    />
     <TodoEmpty v-if="!tasks.length" />
   </q-page>
 </template>
