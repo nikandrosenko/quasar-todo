@@ -3,7 +3,7 @@
     <div class="row q-pa-sm q-mb-md">
       <TodoInput @addTask="addTask" v-model="newTask" />
     </div>
-    <q-list separator bordered>
+    <q-list v-if="tasks.length" separator bordered>
       <TodoItem
         v-for="task in tasks"
         :key="task.id"
