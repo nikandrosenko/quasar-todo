@@ -31,7 +31,7 @@
           />
         </q-item-section>
         <q-item-section>
-          <q-item-label class="text-capitalize">{{ task.title }}</q-item-label>
+          <q-item-label>{{ task.title }}</q-item-label>
         </q-item-section>
         <q-item-section v-if="task.done" side>
           <q-btn
@@ -44,6 +44,12 @@
         </q-item-section>
       </q-item>
     </q-list>
+    <div v-if="!tasks.length" class="no-task absolute-center">
+      <q-icon name="whatshot" size="150px" color="primary"></q-icon>
+      <div class="text-h4 text-primary text-center text-capitalize">
+        no tasks
+      </div>
+    </div>
   </q-page>
 </template>
 
@@ -139,5 +145,8 @@ export default {
     text-decoration: line-through;
     color: $primary;
   }
+}
+.no-task {
+  opacity: 0.5;
 }
 </style>
