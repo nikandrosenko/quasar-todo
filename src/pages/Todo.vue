@@ -15,7 +15,17 @@
       </q-input>
     </div>
     <q-list separator bordered>
-      <q-item
+      <TodoItem
+        @click="toggleDone(task.id)"
+        @deleteTask="deleteTask(task.id)"
+        clickable
+        :class="{ 'done bg-red-1': task.done }"
+        v-for="task in tasks"
+        :key="task.id"
+        :task_data="task"
+        v-ripple
+      />
+      <!-- <q-item
         @click="toggleDone(task.id)"
         clickable
         :class="{ 'done bg-red-1': task.done }"
@@ -42,7 +52,7 @@
             icon="delete"
           />
         </q-item-section>
-      </q-item>
+      </q-item> -->
     </q-list>
     <div v-if="!tasks.length" class="no-task absolute-center">
       <q-icon name="whatshot" size="150px" color="primary"></q-icon>
@@ -67,8 +77,10 @@ import {
   orderBy,
 } from "firebase/firestore";
 import { db } from "../firebase";
+import TodoItem from "../components/TodoItem.vue";
 
 export default {
+  components: { TodoItem },
   setup() {
     const tasksCollectionRef = collection(db, "tasks");
     const tasksCollectionQuery = query(
@@ -105,8 +117,8 @@ export default {
           });
         } else if (
           tasks.value.some(
-            (element) =>
-              element.title.trim().toLowerCase() ===
+            (el) =>
+              el.title.trim().toLowerCase() ===
               newTask.value.trim().toLowerCase()
           )
         ) {
@@ -153,12 +165,12 @@ export default {
 </script>
 
 <style lang="scss">
-.done {
-  .q-item__label {
-    text-decoration: line-through;
-    color: $primary;
-  }
-}
+// .done {
+//   .q-item__label {
+//     text-decoration: line-through;
+//     color: $primary;
+//   }
+// }
 .no-task {
   opacity: 0.5;
 }
