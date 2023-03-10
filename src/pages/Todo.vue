@@ -1,18 +1,7 @@
 <template>
   <q-page class="q-pa-lg column">
     <div class="row q-pa-sm q-mb-md">
-      <q-input
-        @keyup.enter="addTask"
-        filled
-        v-model="newTask"
-        class="col"
-        label="Add your task"
-        dense
-      >
-        <template v-slot:append>
-          <q-btn @click="addTask" round flat dense icon="add" />
-        </template>
-      </q-input>
+      <TodoInput @addTask="addTask" v-model="newTask" />
     </div>
     <q-list separator bordered>
       <TodoItem
@@ -41,11 +30,12 @@ import {
   orderBy,
 } from "firebase/firestore";
 import { db } from "../firebase";
+import TodoInput from "../components/TodoInput.vue";
 import TodoItem from "../components/TodoItem.vue";
 import TodoEmpty from "../components/TodoEmpty.vue";
 
 export default {
-  components: { TodoItem, TodoEmpty },
+  components: { TodoInput, TodoItem, TodoEmpty },
   setup() {
     const tasksCollectionRef = collection(db, "tasks");
     const tasksCollectionQuery = query(
@@ -130,12 +120,6 @@ export default {
 </script>
 
 <style lang="scss">
-// .done {
-//   .q-item__label {
-//     text-decoration: line-through;
-//     color: $primary;
-//   }
-// }
 .no-task {
   opacity: 0.5;
 }
