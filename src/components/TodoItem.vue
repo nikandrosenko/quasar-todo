@@ -1,5 +1,10 @@
 <template>
-  <q-item>
+  <q-item
+    @click="toggleDone"
+    clickable
+    :class="{ 'done bg-red-1': task_data.done }"
+    v-ripple
+  >
     <q-item-section avatar>
       <q-checkbox
         class="no-pointer-events"
@@ -37,8 +42,12 @@ export default {
     const deleteTask = () => {
       emit("deleteTask");
     };
+    const toggleDone = () => {
+      emit("toggleDone");
+    };
     return {
       deleteTask,
+      toggleDone,
     };
   },
 };

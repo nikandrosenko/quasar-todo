@@ -16,43 +16,12 @@
     </div>
     <q-list separator bordered>
       <TodoItem
-        @click="toggleDone(task.id)"
-        @deleteTask="deleteTask(task.id)"
-        clickable
-        :class="{ 'done bg-red-1': task.done }"
         v-for="task in tasks"
         :key="task.id"
         :task_data="task"
-        v-ripple
+        @toggleDone="toggleDone(task.id)"
+        @deleteTask="deleteTask(task.id)"
       />
-      <!-- <q-item
-        @click="toggleDone(task.id)"
-        clickable
-        :class="{ 'done bg-red-1': task.done }"
-        v-for="task in tasks"
-        :key="task.id"
-        v-ripple
-      >
-        <q-item-section avatar>
-          <q-checkbox
-            class="no-pointer-events"
-            v-model="task.done"
-            color="primary"
-          />
-        </q-item-section>
-        <q-item-section>
-          <q-item-label>{{ task.title }}</q-item-label>
-        </q-item-section>
-        <q-item-section v-if="task.done" side>
-          <q-btn
-            @click.stop="deleteTask(task.id)"
-            dense
-            round
-            color="primary"
-            icon="delete"
-          />
-        </q-item-section>
-      </q-item> -->
     </q-list>
     <div v-if="!tasks.length" class="no-task absolute-center">
       <q-icon name="whatshot" size="150px" color="primary"></q-icon>
