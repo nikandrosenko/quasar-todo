@@ -1,55 +1,18 @@
 <template>
   <q-page class="q-pa-lg column">
     <div class="row q-pa-sm q-mb-md">
-      <q-input
-        @keyup.enter="addTask"
-        filled
-        v-model="newTask"
-        class="col"
-        label="Add your task"
-        dense
-      >
-        <template v-slot:append>
-          <q-btn @click="addTask" round flat dense icon="add" />
-        </template>
-      </q-input>
+      <TodoInput @addTask="addTask" v-model="newTask" />
     </div>
     <q-list separator bordered>
-      <q-item
-        @click="toggleDone(task.id)"
-        clickable
-        :class="{ 'done bg-red-1': task.done }"
+      <TodoItem
         v-for="task in tasks"
         :key="task.id"
-        v-ripple
-      >
-        <q-item-section avatar>
-          <q-checkbox
-            class="no-pointer-events"
-            v-model="task.done"
-            color="primary"
-          />
-        </q-item-section>
-        <q-item-section>
-          <q-item-label>{{ task.title }}</q-item-label>
-        </q-item-section>
-        <q-item-section v-if="task.done" side>
-          <q-btn
-            @click.stop="deleteTask(task.id)"
-            dense
-            round
-            color="primary"
-            icon="delete"
-          />
-        </q-item-section>
-      </q-item>
+        :task_data="task"
+        @toggleDone="toggleDone(task.id)"
+        @deleteTask="deleteTask(task.id)"
+      />
     </q-list>
-    <div v-if="!tasks.length" class="no-task absolute-center">
-      <q-icon name="whatshot" size="150px" color="primary"></q-icon>
-      <div class="text-h4 text-primary text-center text-capitalize">
-        no tasks
-      </div>
-    </div>
+    <TodoEmpty v-if="!tasks.length" />
   </q-page>
 </template>
 
@@ -67,8 +30,12 @@ import {
   orderBy,
 } from "firebase/firestore";
 import { db } from "../firebase";
+import TodoInput from "../components/TodoInput.vue";
+import TodoItem from "../components/TodoItem.vue";
+import TodoEmpty from "../components/TodoEmpty.vue";
 
 export default {
+  components: { TodoInput, TodoItem, TodoEmpty },
   setup() {
     const tasksCollectionRef = collection(db, "tasks");
     const tasksCollectionQuery = query(
@@ -105,8 +72,8 @@ export default {
           });
         } else if (
           tasks.value.some(
-            (element) =>
-              element.title.trim().toLowerCase() ===
+            (el) =>
+              el.title.trim().toLowerCase() ===
               newTask.value.trim().toLowerCase()
           )
         ) {
@@ -151,15 +118,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss">
-.done {
-  .q-item__label {
-    text-decoration: line-through;
-    color: $primary;
-  }
-}
-.no-task {
-  opacity: 0.5;
-}
-</style>
